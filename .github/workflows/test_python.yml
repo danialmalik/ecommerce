@@ -27,4 +27,4 @@ jobs:
         pip install -r requirements/test.txt
     - name: Run Tests
       run: |
-        DISABLE_MIGRATIONS=1 DISABLE_ACCEPTANCE_TESTS=True ./manage.py test ecommerce.courses.tests.test_utils --settings=ecommerce.settings.test --with-ignore-docstrings --logging-level=DEBUG
+        DISABLE_MIGRATIONS=1 DISABLE_ACCEPTANCE_TESTS=True ./manage.py test --settings=ecommerce.settings.test --with-ignore-docstrings --logging-level=DEBUG
