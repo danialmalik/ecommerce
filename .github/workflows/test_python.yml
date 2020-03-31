@@ -1,0 +1,30 @@
+name: Django CI
+
+on:
+  push:
+    branches: [ danial/add-unit-tests-github-actions ]
+  pull_request:
+    branches: [ danial/add-unit-tests-github-actions ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.6, 3.7, 3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements/test.txt
+    - name: Run Tests
+      run: |
+        DISABLE_MIGRATIONS=1 DISABLE_ACCEPTANCE_TESTS=True ./manage.py test ecommerce.courses.tests.test_utils --settings=ecommerce.settings.test --with-ignore-docstrings --logging-level=DEBUG
