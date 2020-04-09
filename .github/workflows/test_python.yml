@@ -25,6 +25,8 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         make requirements
+        make upgrade
     - name: Run Tests
       run: |
+        make validate_python
         DISABLE_MIGRATIONS=1 DISABLE_ACCEPTANCE_TESTS=True ./manage.py test --settings=ecommerce.settings.test --with-ignore-docstrings --logging-level=DEBUG
