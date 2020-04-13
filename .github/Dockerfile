@@ -2,6 +2,7 @@ FROM edxops/ecommerce:ironwood.master
 
 RUN apt-get update && \
     apt-get install -y \
+    libstartup-notification0 \
         firefox \
         xvfb \
     # Remove firefox but leave its dependencies, and then download and install a working version of firefox.
