@@ -29,7 +29,7 @@ jobs:
         echo $(python -m urlparse)
     - name: start docker container
       run: |
-        docker-compose -f ./.travis/docker-compose-travis.yml up -d
+        docker-compose -f ./.github/docker-compose-github.yml up -d
     - name: Install Dependencies
       run: |
         docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements'
