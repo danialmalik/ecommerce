@@ -1,7 +1,7 @@
 FROM edxops/ecommerce:ironwood.master
 
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y \
+    apt-get install -y \
         firefox \
         xvfb \
     # Remove firefox but leave its dependencies, and then download and install a working version of firefox.
