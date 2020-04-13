@@ -23,8 +23,13 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
-        make requirements
+        source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements
+    - name: Update static assets
+      run: |
+        source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/docs && make html
+        source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && DJANGO_SETTINGS_MODULE=ecommerce.settings.test make clean_static
+        source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && DJANGO_SETTINGS_MODULE=ecommerce.settings.test make static
     - name: Run Tests
       run: |
         make validate_python
-        DISABLE_MIGRATIONS=1 DISABLE_ACCEPTANCE_TESTS=True ./manage.py test --settings=ecommerce.settings.test --with-ignore-docstrings --logging-level=DEBUG
+        source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && DJANGO_SETTINGS_MODULE=ecommerce.settings.test TRAVIS=1 xvfb-run make validate_python
