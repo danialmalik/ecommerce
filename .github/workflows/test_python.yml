@@ -35,9 +35,9 @@ jobs:
         docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements'
     - name: DEBUG 2
       run: |
-        docker exec -t ecommerce_testing bash -c 'echo $(python --version)'
+        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && echo $(python --version)'
         docker exec -t ecommerce_testing bash -c 'echo $(pip --version)'
-        docker exec -t ecommerce_testing bash -c 'echo $(which python)'
+        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env &&  echo $(which python)'
         docker exec -t ecommerce_testing bash -c 'echo $(python -m urlparse)'
     - name: Update static assets
       run: |
