@@ -51,7 +51,7 @@ jobs:
     - name: DEBUG MySQL
       run: |
         docker ps -a
-        docker exec -t db bash -c 'mysql'
+        docker exec -t db bash -c 'mysql ecommerce -u ecomm001 -ppassword'
     - name: Run Tests
       run: |
         docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && DJANGO_SETTINGS_MODULE=ecommerce.settings.test TRAVIS=1 xvfb-run make validate_python'
