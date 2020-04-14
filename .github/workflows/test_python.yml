@@ -48,6 +48,10 @@ jobs:
     - name: Make static
       run: |
         docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements && DJANGO_SETTINGS_MODULE=ecommerce.settings.test make static'
+    - name: DEBUG MySQL
+      run: |
+        docker ps -a
+        docker exec -t db bash -c 'mysql'
     - name: Run Tests
       run: |
         docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && DJANGO_SETTINGS_MODULE=ecommerce.settings.test TRAVIS=1 xvfb-run make validate_python'
