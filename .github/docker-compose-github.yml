@@ -29,10 +29,4 @@ services:
       - db
     environment:
       CONN_MAX_AGE: 60
-      DB_ENGINE: "django.db.backends.mysql"
-      DB_HOST: "db"
-      DB_NAME: "ecommerce"
-      DB_PASSWORD: "password"
-      DB_PORT: "3306"
-      DB_USER: "ecomm001"
       DJANGO_SETTINGS_MODULE: "ecommerce.settings.test"
