@@ -2,19 +2,19 @@
 version: "2"
 
 services:
-  ecommerce_db:
+  db:
     image: mysql:5.6
-    container_name: ecommerce_db
+    container_name: db
     command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
     environment:
-      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_USER: "root"
+      MYSQL_USER: "ecomm001"
       MYSQL_PASSWORD: "password"
       MYSQL_DATABASE: "ecommerce"
-  ecommerce_test_web:
+  ecommerce:
     image: edxops/ecommerce:ironwood.master
-    container_name: ecommerce_test
+    container_name: ecommerce_testing
     build: .
     volumes:
       - ..:/edx/app/ecommerce/ecommerce
@@ -27,13 +27,13 @@ services:
     command: tail -f /dev/null
     working_dir: /edx/app/ecommerce/ecommerce
     depends_on:
-      - ecommerce_db
+      - db
     environment:
       CONN_MAX_AGE: 60
       DB_ENGINE: "django.db.backends.mysql"
-      DB_HOST: "ecommerce_db"
+      DB_HOST: "db"
       DB_NAME: "ecommerce"
-      DB_PASSWORD: "password"
+      DB_PASSWORD: ""
       DB_PORT: "3306"
       DB_USER: "root"
       DJANGO_SETTINGS_MODULE: "ecommerce.settings.test"
