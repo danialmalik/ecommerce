@@ -30,6 +30,9 @@ jobs:
     - name: start docker container
       run: |
         docker-compose -f ./.github/docker-compose-github.yml up -d
+    - name: DEBUG containers
+      run: |
+        docker ps -a
     - name: Install Dependencies
       run: |
         docker exec -t ecommerce_test bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements'
@@ -48,9 +51,6 @@ jobs:
     - name: Make static
       run: |
         docker exec -t ecommerce_test bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements && DJANGO_SETTINGS_MODULE=ecommerce.settings.test make static'
-    - name: DEBUG containers
-      run: |
-        docker ps -a
     - name: Run Tests
       run: |
         docker exec -t ecommerce_test bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && DJANGO_SETTINGS_MODULE=ecommerce.settings.test TRAVIS=1 xvfb-run make validate_python'
