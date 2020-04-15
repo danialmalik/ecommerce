@@ -2,19 +2,19 @@
 version: "2"
 
 services:
-  db:
+  ecommerce_test_db:
     image: mysql:5.6
     container_name: db
     command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
     environment:
       MYSQL_ROOT_PASSWORD: "password"
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_USER: "ecomm001"
+      MYSQL_USER: "root"
       MYSQL_PASSWORD: "password"
       MYSQL_DATABASE: "ecommerce"
-  ecommerce:
+  ecommerce_test_web:
     image: edxops/ecommerce:ironwood.master
-    container_name: ecommerce_testing
+    container_name: web
     build: .
     volumes:
       - ..:/edx/app/ecommerce/ecommerce
@@ -24,9 +24,14 @@ services:
     # run and expose a port for ecommerce.  This means that we need to run some
     # command that keeps the ecommerce container alive while we run tests on it.
     # We have not yet standardized on an init replacement which could be used instead.
-    command: tail -f /dev/null
+    command: bash -c "
+      apt-get update &&
+      apt-get install -y mysql-client &&
+      tail -f /dev/null
+      "
+    working_dir: /edx/app/ecommerce/ecommerce
     depends_on:
-      - db
+      - ecommerce_test_db
     environment:
       CONN_MAX_AGE: 60
       DB_ENGINE: "django.db.backends.mysql"
@@ -34,5 +39,5 @@ services:
       DB_NAME: "ecommerce"
       DB_PASSWORD: "password"
       DB_PORT: "3306"
-      DB_USER: "ecomm001"
+      DB_USER: "root"
       DJANGO_SETTINGS_MODULE: "ecommerce.settings.test"
