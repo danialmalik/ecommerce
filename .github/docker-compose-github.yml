@@ -2,7 +2,7 @@
 version: "2"
 
 services:
-  ecommerce_test_db:
+  ecommerce_db:
     image: mysql:5.6
     container_name: ecommerce_db
     command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
@@ -27,7 +27,7 @@ services:
     command: tail -f /dev/null
     working_dir: /edx/app/ecommerce/ecommerce
     depends_on:
-      - ecommerce_test_db
+      - ecommerce_db
     environment:
       CONN_MAX_AGE: 60
       DB_ENGINE: "django.db.backends.mysql"
