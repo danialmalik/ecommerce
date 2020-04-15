@@ -2,13 +2,12 @@ name: Django CI
 
 on:
   push:
-    branches: [ danial/add-unit-tests-github-actions ]
+    branches: [ 'develop', 'master', 'release-candidate' ]
   pull_request:
-    branches: [ danial/add-unit-tests-github-actions ]
+    branches: [ 'develop', 'master', 'release-candidate' ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -21,36 +20,21 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: DEBUG
-      run: |
-        echo $(python --version)
-        echo $(pip --version)
-        echo $(which python)
-        echo $(python -m urlparse)
-    - name: start docker container
+    - name: Setup docker containers
       run: |
         docker-compose -f ./.github/docker-compose-github.yml up -d
-    - name: DEBUG containers
-      run: |
-        docker ps -a
-    - name: Install Dependencies
+    - name: Install dependencies
       run: |
         docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements'
-    - name: DEBUG 2
-      run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && echo $(python --version)'
-        docker exec -t ecommerce_testing bash -c 'echo $(pip --version)'
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env &&  echo $(which python)'
-        docker exec -t ecommerce_testing bash -c 'echo $(python -m urlparse)'
-    - name: Make html
+    - name: Run 'make html'
       run: |
         docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/docs && make html'
-    - name: Make clean static
+    - name: Run 'make clean_static'
       run: |
         docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && DJANGO_SETTINGS_MODULE=ecommerce.settings.test make clean_static'
-    - name: Make static
+    - name: Run 'make static'
       run: |
         docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements && DJANGO_SETTINGS_MODULE=ecommerce.settings.test make static'
-    - name: Run Tests
+    - name: Run the python tests
       run: |
         docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && DJANGO_SETTINGS_MODULE=ecommerce.settings.test xvfb-run make validate_python'
