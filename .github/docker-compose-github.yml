@@ -14,7 +14,7 @@ services:
       MYSQL_DATABASE: "ecommerce"
   ecommerce_test_web:
     image: edxops/ecommerce:ironwood.master
-    container_name: web
+    container_name: ecommerce_test
     build: .
     volumes:
       - ..:/edx/app/ecommerce/ecommerce
