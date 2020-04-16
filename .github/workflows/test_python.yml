@@ -48,10 +48,6 @@ jobs:
         if: always()
         run: |
           docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make validate_js'
-      - name: Test keywords
-        if: always()
-        run: |
-          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make check_keywords'
   unit-tests:
     runs-on: ubuntu-latest
     strategy:
