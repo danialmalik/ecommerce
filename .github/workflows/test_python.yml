@@ -48,8 +48,8 @@ jobs:
         if: always()
         run: |
           docker exec -t ecommerce_testing bash -c '
-          PATH=$PATH:/edx/app/ecommerce/nodeenvs/ecommerce/bin:/snap/binsource
-          /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ &&
+          export PATH=$PATH:/edx/app/ecommerce/nodeenvs/ecommerce/bin:/snap/bin &&
+          source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ &&
           make validate_js
           '
   unit-tests:
