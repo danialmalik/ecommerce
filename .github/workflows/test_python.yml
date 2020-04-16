@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: Setup docker containers
         run: |
-          OPENEDX_RELEASE=${{matrix.openedx-release}} docker-compose -f ./.github/docker-compose-github.yml up -d
+          OPENEDX_RELEASE=${{matrix.openedx-release}} docker-compose -f ../docker-compose-github.yml up -d
       - name: Install tox
         run: |
           docker exec -t ecommerce_testing bash -c "cd /edx/app/ecommerce/ecommerce/ && pip install tox"
@@ -63,7 +63,7 @@ jobs:
     #     python-version: ${{ matrix.python-version }}
     - name: Setup docker containers
       run: |
-        OPENEDX_RELEASE=${{matrix.openedx-release}} docker-compose -f ./.github/docker-compose-github.yml up -d
+        OPENEDX_RELEASE=${{matrix.openedx-release}} docker-compose -f ../docker-compose-github.yml up -d
     - name: Install requirements
       run: |
         docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements'
