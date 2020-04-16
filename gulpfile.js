@@ -26,7 +26,8 @@ var gulp = require('gulp'),
  */
     gulp.task('test', function(cb) {
         new KarmaServer({
-            configFile: path.resolve('karma.conf.js')
+            configFile: path.resolve('karma.conf.js'),
+            browserNoActivityTimeout: 3000
         }, cb).start();
     });
 
