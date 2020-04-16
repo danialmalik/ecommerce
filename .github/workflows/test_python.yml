@@ -16,38 +16,38 @@ jobs:
         openedx-release: ['hawthorn.master']
     steps:
       - name: Setup docker containers
-      run: |
-        OPENEDX_RELEASE=${{matrix.openedx-release}} docker-compose -f ./.github/docker-compose-github.yml up -d
-    - name: Install tox
-      run: |
-        docker exec -t ecommerce_testing bash -c "cd /edx/app/ecommerce/ecommerce/ && pip install tox"
-    - name: Install requirements.js
-      run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements.js'
-    - name: run check_translations_up_to_date
-      run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make check_translations_up_to_date'
-    - name: run validate_translations
-      run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make validate_translations'
-    - name: run clean_static
-      run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make clean_static'
-    - name: Run static
-      run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make static'
-    - name: Install requirements.js
-      run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements.js'
-    - name: Test quality
-      run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make quality'
-    - name: Test JS
-      run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make validate_js'
-    - name: Test keywords
-      run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make check_keywords'
+        run: |
+          OPENEDX_RELEASE=${{matrix.openedx-release}} docker-compose -f ./.github/docker-compose-github.yml up -d
+      - name: Install tox
+        run: |
+          docker exec -t ecommerce_testing bash -c "cd /edx/app/ecommerce/ecommerce/ && pip install tox"
+      - name: Install requirements.js
+        run: |
+          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements.js'
+      - name: run check_translations_up_to_date
+        run: |
+          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make check_translations_up_to_date'
+      - name: run validate_translations
+        run: |
+          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make validate_translations'
+      - name: run clean_static
+        run: |
+          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make clean_static'
+      - name: Run static
+        run: |
+          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make static'
+      - name: Install requirements.js
+        run: |
+          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements.js'
+      - name: Test quality
+        run: |
+          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make quality'
+      - name: Test JS
+        run: |
+          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make validate_js'
+      - name: Test keywords
+        run: |
+          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make check_keywords'
   unit-tests:
     runs-on: ubuntu-latest
     strategy:
