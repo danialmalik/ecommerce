@@ -13,7 +13,7 @@ services:
       MYSQL_PASSWORD: "password"
       MYSQL_DATABASE: "ecommerce"
   ecommerce:
-    image: edxops/ecommerce:ironwood.master
+    image: edxops/ecommerce:${OPENEDX_RELEASE:-latest}
     container_name: ecommerce_testing
     build: .
     volumes:
