@@ -13,7 +13,7 @@ services:
       MYSQL_PASSWORD: "password"
       MYSQL_DATABASE: "ecommerce"
   ecommerce:
-    image: edxops/ecommerce:${OPENEDX_RELEASE:-latest}
+    image: edxops/ecommerce:{{OPENEDX_RELEASE}}
     container_name: ecommerce_testing
     build: .
     volumes:
