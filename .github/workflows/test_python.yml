@@ -29,24 +29,27 @@ jobs:
         run: |
           docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make check_translations_up_to_date'
       - name: run validate_translations
+        if: always()
         run: |
           docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make validate_translations'
       - name: run clean_static
+        if: always()
         run: |
           docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make clean_static'
       - name: Run static
+        if: always()
         run: |
           docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make static'
-      - name: Install requirements.js
-        run: |
-          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements.js'
       - name: Test quality
+        if: always()
         run: |
           docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make quality'
-      - name: Test JS
+      - name: Validate JS
+        if: always()
         run: |
           docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make validate_js'
       - name: Test keywords
+        if: always()
         run: |
           docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make check_keywords'
   unit-tests:
