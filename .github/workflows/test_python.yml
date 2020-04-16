@@ -2,9 +2,9 @@ name: Django CI
 
 on:
   push:
-    branches: [ 'develop', 'master', 'release-candidate' ]
+    branches: [ 'develop', 'master', 'release-candidate', 'danial/add-unit-tests-github-actions' ]
   pull_request:
-    branches: [ 'develop', 'master', 'release-candidate' ]
+    branches: [ 'develop', 'master', 'release-candidate', 'danial/add-unit-tests-github-actions' ]
 
 jobs:
   quality-tests:
