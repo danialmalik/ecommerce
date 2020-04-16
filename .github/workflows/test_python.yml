@@ -15,6 +15,7 @@ jobs:
         python-version: [2.7]
         openedx-release: ['hawthorn.master']
     steps:
+      - uses: actions/checkout@v2
       - name: Setup docker containers
         run: |
           OPENEDX_RELEASE=${{matrix.openedx-release}} docker-compose -f .github/docker-compose-github.yml up -d
@@ -56,7 +57,7 @@ jobs:
         python-version: [2.7]
         openedx-release: ['hawthorn.master']
     steps:
-    # - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
     # - name: Set up Python ${{ matrix.python-version }}
     #   uses: actions/setup-python@v1
     #   with:
