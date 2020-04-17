@@ -50,7 +50,6 @@ jobs:
           docker exec -t ecommerce_testing bash -c '
           export PATH=$PATH:/edx/app/ecommerce/nodeenvs/ecommerce/bin:/snap/bin &&
           source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ &&
-          rm -rf node_modules && npm i &&
           make validate_js
           '
   unit-tests:
