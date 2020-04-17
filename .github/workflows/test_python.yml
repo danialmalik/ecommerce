@@ -50,7 +50,7 @@ jobs:
           docker exec -t ecommerce_testing bash -c '
           export PATH=$PATH:/edx/app/ecommerce/nodeenvs/ecommerce/bin:/snap/bin &&
           source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ &&
-          TRAVIS=1 make validate_js
+          TRAVIS=1 xvfb-run make validate_js
           '
   unit-tests:
     runs-on: ubuntu-latest
@@ -83,6 +83,3 @@ jobs:
     - name: Run the python tests
       run: |
         docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && DJANGO_SETTINGS_MODULE=ecommerce.settings.test TRAVIS=1 xvfb-run make validate_python'
-    - name: Run the python tests fast
-      run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && DJANGO_SETTINGS_MODULE=ecommerce.settings.test TRAVIS=1 xvfb-run make validate_python_fast'
