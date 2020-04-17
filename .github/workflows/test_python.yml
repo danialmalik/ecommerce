@@ -13,7 +13,7 @@ jobs:
       max-parallel: 4
       matrix:
         python-version: [2.7]
-        openedx-release: ['hawthorn.master']
+        openedx-release: ['ironwood.master']
     steps:
       - uses: actions/checkout@v2
       - name: Setup docker containers
