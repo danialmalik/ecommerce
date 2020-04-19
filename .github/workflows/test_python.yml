@@ -135,4 +135,4 @@ jobs:
         docker exec -t ecommerce_testing bash -c '
         source /edx/app/ecommerce/ecommerce_env &&
         cd /edx/app/ecommerce/ecommerce/ &&
-        DJANGO_SETTINGS_MODULE=ecommerce.settings.test xvfb-run make validate_python'
+        TRAVIS=1 DJANGO_SETTINGS_MODULE=ecommerce.settings.test xvfb-run make validate_python'

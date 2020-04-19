@@ -12,6 +12,3 @@ RUN apt-get update && \
         && wget -O "$TEMP_DEB" https://s3.amazonaws.com/vagrant.testeng.edx.org/firefox_61.0.1%2Bbuild1-0ubuntu0.16.04.1_amd64.deb \
         && dpkg -i "$TEMP_DEB" \
         && rm -rf /var/lib/apt/lists/*
-
-ENV TRAVIS 1
-ENV DJANGO_SETTINGS_MODULE ecommerce.settings.test
