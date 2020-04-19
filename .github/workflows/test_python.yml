@@ -21,36 +21,56 @@ jobs:
           OPENEDX_RELEASE=${{ matrix.openedx-release }} docker-compose -f .github/docker-compose-github.yml up -d
       - name: Install tox
         run: |
-          docker exec -t ecommerce_testing bash -c "cd /edx/app/ecommerce/ecommerce/ && pip install tox"
+          docker exec -t ecommerce_testing bash -c '
+          cd /edx/app/ecommerce/ecommerce/ &&
+          pip install tox'
       - name: Install requirements.js
         run: |
-          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements.js'
+          docker exec -t ecommerce_testing bash -c '
+          source /edx/app/ecommerce/ecommerce_env &&
+          cd /edx/app/ecommerce/ecommerce/ &&
+          make requirements.js'
       - name: run check_translations_up_to_date
         run: |
-          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make check_translations_up_to_date'
+          docker exec -t ecommerce_testing bash -c '
+          source /edx/app/ecommerce/ecommerce_env &&
+          cd /edx/app/ecommerce/ecommerce/ &&
+          make check_translations_up_to_date'
       - name: run validate_translations
         if: always()
         run: |
-          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make validate_translations'
+          docker exec -t ecommerce_testing bash -c '
+          source /edx/app/ecommerce/ecommerce_env &&
+          cd /edx/app/ecommerce/ecommerce/ &&
+          make validate_translations'
       - name: run clean_static
         if: always()
         run: |
-          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make clean_static'
+          docker exec -t ecommerce_testing bash -c '
+          source /edx/app/ecommerce/ecommerce_env &&
+          cd /edx/app/ecommerce/ecommerce/ &&
+          make clean_static'
       - name: Run static
         if: always()
         run: |
-          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make static'
+          docker exec -t ecommerce_testing bash -c '
+          source /edx/app/ecommerce/ecommerce_env &&
+          cd /edx/app/ecommerce/ecommerce/ &&
+          make static'
       - name: Test quality
         if: always()
         run: |
-          docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make quality'
+          docker exec -t ecommerce_testing bash -c '
+          source /edx/app/ecommerce/ecommerce_env &&
+          cd /edx/app/ecommerce/ecommerce/ &&
+          make quality'
       - name: Validate JS
         if: always()
         run: |
           docker exec -t ecommerce_testing bash -c '
           export PATH=$PATH:/edx/app/ecommerce/nodeenvs/ecommerce/bin:/snap/bin &&
           source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ &&
-          TRAVIS=1 xvfb-run make validate_js
+          xvfb-run make validate_js
           '
   unit-tests:
     runs-on: ubuntu-latest
@@ -70,16 +90,32 @@ jobs:
         OPENEDX_RELEASE=${{ matrix.openedx-release }} docker-compose -f .github/docker-compose-github.yml up -d
     - name: Install requirements
       run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements'
+        docker exec -t ecommerce_testing bash -c '
+        source /edx/app/ecommerce/ecommerce_env &&
+        cd /edx/app/ecommerce/ecommerce/ &&
+        make requirements'
     - name: Run 'make html'
       run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/docs && make html'
+        docker exec -t ecommerce_testing bash -c '
+        source /edx/app/ecommerce/ecommerce_env &&
+        cd /edx/app/ecommerce/ecommerce/docs &&
+        make html'
     - name: Run 'make clean_static'
       run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && DJANGO_SETTINGS_MODULE=ecommerce.settings.test make clean_static'
+        docker exec -t ecommerce_testing bash -c '
+        source /edx/app/ecommerce/ecommerce_env &&
+        cd /edx/app/ecommerce/ecommerce/ &&
+        make clean_static'
     - name: Run 'make static'
       run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && make requirements && DJANGO_SETTINGS_MODULE=ecommerce.settings.test make static'
+        docker exec -t ecommerce_testing bash -c '
+        source /edx/app/ecommerce/ecommerce_env &&
+        cd /edx/app/ecommerce/ecommerce/ &&
+        make requirements &&
+        make static'
     - name: Run the python tests
       run: |
-        docker exec -t ecommerce_testing bash -c 'source /edx/app/ecommerce/ecommerce_env && cd /edx/app/ecommerce/ecommerce/ && DJANGO_SETTINGS_MODULE=ecommerce.settings.test TRAVIS=1 xvfb-run make validate_python'
+        docker exec -t ecommerce_testing bash -c '
+        source /edx/app/ecommerce/ecommerce_env &&
+        cd /edx/app/ecommerce/ecommerce/ &&
+        xvfb-run make validate_python'
