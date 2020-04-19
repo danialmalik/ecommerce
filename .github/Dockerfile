@@ -13,5 +13,5 @@ RUN apt-get update && \
         && dpkg -i "$TEMP_DEB" \
         && rm -rf /var/lib/apt/lists/*
 
-ENV TRAVIS=1
-ENV DJANGO_SETTINGS_MODULE=ecommerce.settings.test
+ENV TRAVIS 1
+ENV DJANGO_SETTINGS_MODULE ecommerce.settings.test
