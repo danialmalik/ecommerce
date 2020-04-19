@@ -7,3 +7,4 @@ RUN apt-get update && \
         xvfb
 
 ENV TRAVIS=1
+ENV DJANGO_SETTINGS_MODULE=ecommerce.settings.test
