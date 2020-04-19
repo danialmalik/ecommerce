@@ -11,9 +11,7 @@ jobs:
   translations-validations:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 4
       matrix:
-        python-version: [2.7]
         openedx-release: ['ironwood.master']
     steps:
       - uses: actions/checkout@v2
@@ -42,20 +40,13 @@ jobs:
   quality-tests:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 4
       matrix:
-        python-version: [2.7]
         openedx-release: ['ironwood.master']
     steps:
       - uses: actions/checkout@v2
       - name: Setup docker containers
         run: |
           OPENEDX_RELEASE=${{ matrix.openedx-release }} docker-compose -f .github/docker-compose-github.yml up -d
-      # - name: Install tox
-      #   run: |
-      #     docker exec -t ecommerce_testing bash -c '
-      #     cd /edx/app/ecommerce/ecommerce/ &&
-      #     pip install tox'
       - name: Install requirements.js
         run: |
           docker exec -t ecommerce_testing bash -c '
@@ -81,28 +72,20 @@ jobs:
           cd /edx/app/ecommerce/ecommerce/ &&
           make quality'
       - name: Validate JS
-        if: always()
         run: |
           docker exec -t ecommerce_testing bash -c '
           export PATH=$PATH:/edx/app/ecommerce/nodeenvs/ecommerce/bin:/snap/bin &&
           source /edx/app/ecommerce/ecommerce_env &&
           cd /edx/app/ecommerce/ecommerce/ &&
-          xvfb-run make validate_js
-          '
+          xvfb-run make validate_js'
 
   python-tests:
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 4
       matrix:
-        python-version: [2.7]
         openedx-release: ['ironwood.master']
     steps:
     - uses: actions/checkout@v2
-    # - name: Set up Python ${{ matrix.python-version }}
-    #   uses: actions/setup-python@v1
-    #   with:
-    #     python-version: ${{ matrix.python-version }}
     - name: Setup docker containers
       run: |
         OPENEDX_RELEASE=${{ matrix.openedx-release }} docker-compose -f .github/docker-compose-github.yml up -d
