@@ -117,22 +117,22 @@ jobs:
         docker exec -t ecommerce_testing bash -c '
         source /edx/app/ecommerce/ecommerce_env &&
         cd /edx/app/ecommerce/ecommerce/docs &&
-        make html'
+        DJANGO_SETTINGS_MODULE=ecommerce.settings.test make html'
     - name: Run 'make clean_static'
       run: |
         docker exec -t ecommerce_testing bash -c '
         source /edx/app/ecommerce/ecommerce_env &&
         cd /edx/app/ecommerce/ecommerce/ &&
-        make clean_static'
+        DJANGO_SETTINGS_MODULE=ecommerce.settings.test make clean_static'
     - name: Run 'make static'
       run: |
         docker exec -t ecommerce_testing bash -c '
         source /edx/app/ecommerce/ecommerce_env &&
         cd /edx/app/ecommerce/ecommerce/ &&
-        make static'
+        DJANGO_SETTINGS_MODULE=ecommerce.settings.test make static'
     - name: Run the python tests
       run: |
         docker exec -t ecommerce_testing bash -c '
         source /edx/app/ecommerce/ecommerce_env &&
         cd /edx/app/ecommerce/ecommerce/ &&
-        xvfb-run make validate_python'
+        DJANGO_SETTINGS_MODULE=ecommerce.settings.test xvfb-run make validate_python'
