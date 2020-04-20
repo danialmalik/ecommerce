@@ -20,7 +20,7 @@ jobs:
           OPENEDX_RELEASE=${{ matrix.openedx-release }} docker-compose -f .github/docker-compose-github.yml up -d
       - name: Get into the container
         run: |
-          docker exec -it ecommerce_testing bash
+          docker exec -i ecommerce_testing bash
       - name: Install requirements.js
         run: |
           source /edx/app/ecommerce/ecommerce_env
