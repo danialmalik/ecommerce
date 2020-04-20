@@ -18,24 +18,24 @@ jobs:
       - name: Setup docker containers
         run: |
           OPENEDX_RELEASE=${{ matrix.openedx-release }} docker-compose -f .github/docker-compose-github.yml up -d
+      - name: Get into the container
+        run: |
+          docker exec -it ecommerce_testing bash
       - name: Install requirements.js
         run: |
-          docker exec -t ecommerce_testing bash -c '
-          source /edx/app/ecommerce/ecommerce_env &&
-          cd /edx/app/ecommerce/ecommerce/ &&
-          make requirements.js'
+          source /edx/app/ecommerce/ecommerce_env
+          cd /edx/app/ecommerce/ecommerce/
+          make requirements.js
       - name: run check_translations_up_to_date
         run: |
-          docker exec -t ecommerce_testing bash -c '
-          source /edx/app/ecommerce/ecommerce_env &&
-          cd /edx/app/ecommerce/ecommerce/ &&
-          make check_translations_up_to_date'
+          source /edx/app/ecommerce/ecommerce_env
+          cd /edx/app/ecommerce/ecommerce/
+          make check_translations_up_to_date
       - name: run validate_translations
         run: |
-          docker exec -t ecommerce_testing bash -c '
-          source /edx/app/ecommerce/ecommerce_env &&
-          cd /edx/app/ecommerce/ecommerce/ &&
-          make validate_translations'
+          source /edx/app/ecommerce/ecommerce_env
+          cd /edx/app/ecommerce/ecommerce/
+          make validate_translations
 
   quality-tests:
     runs-on: ubuntu-latest
